@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-950">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Викторина по литературе: Открытый урок (Мобильная версия)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .touch-action-none {
+            touch-action: manipulation;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="h-full text-slate-100 flex flex-col justify-between overflow-x-hidden touch-action-none bg-gradient-to-b from-slate-950 via-slate-900 to-indigo-950">
+
+    <!-- App Header -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-amber-500 flex items-center justify-center text-lg font-bold shadow-md shadow-indigo-500/20">
+                    📖
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-sm leading-tight text-white tracking-wide">ЛИТЕРАТУРНЫЙ ОЛИМП</h1>
+                    <p class="text-[10px] text-amber-400 font-semibold tracking-wider uppercase">Открытый урок • Сложный уровень</p>
+                </div>
+            </div>
+
+            <!-- Controls (Sound, Fullscreen, Reset) -->
+            <div class="flex items-center space-x-1.5">
+                <button id="sound-btn" onclick="toggleSound()" class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-sm active:scale-90 transition">
+                    🔊
+                </button>
+                <button id="home-btn" onclick="showTopics()" class="hidden w-9 h-9 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center text-sm active:scale-90 transition">
+                    🏠
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Scrollable Screen -->
+    <main class="flex-grow flex items-center justify-center p-3 sm:p-4 max-w-md mx-auto w-full">
+
+        <!-- ================= SCREEN 1: TOPIC SELECTION ================= -->
+        <section id="screen-topics" class="w-full space-y-4 py-2">
+            <div class="text-center space-y-1.5">
+                <span class="inline-block px-3 py-0.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[11px] font-bold rounded-full uppercase tracking-wider">
+                    Мобильное приложение для урока
+                </span>
+                <h2 class="text-xl font-black text-white leading-tight">Выберите раздел викторины</h2>
+                <p class="text-xs text-slate-400">Нажмите на тему для старта (10 вопросов в каждом разделе)</p>
+            </div>
+
+            <!-- Topic Selection List -->
+            <div class="space-y-3">
+                <!-- Topic 1 Card -->
+                <button onclick="startQuiz('topic1')" class="w-full text-left p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-800 active:scale-[0.97] transition border border-amber-500/30 shadow-lg relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-500/10 rounded-full blur-xl"></div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 font-bold text-[11px] border border-amber-500/30">
+                            🍵 ТЕМА 1
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">10 вопросов</span>
+                    </div>
+                    <h3 class="font-extrabold text-white text-base group-hover:text-amber-400 transition">«Ковёр жизни»</h3>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-2">Из сборника «Зелёная пиала» (пер. А. Александровой, М. Туберовского)</p>
+                </button>
+
+                <!-- Topic 2 Card -->
+                <button onclick="startQuiz('topic2')" class="w-full text-left p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-800 active:scale-[0.97] transition border border-emerald-500/30 shadow-lg relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-500/10 rounded-full blur-xl"></div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold text-[11px] border border-emerald-500/30">
+                            🏰 ТЕМА 2
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">10 вопросов</span>
+                    </div>
+                    <h3 class="font-extrabold text-white text-base group-hover:text-emerald-400 transition">«Сильнее крепкой стены»</h3>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-2">Д. Боконбаев — Гражданский пафос, патриотизм и символика</p>
+                </button>
+
+                <!-- Topic 3 Card -->
+                <button onclick="startQuiz('topic3')" class="w-full text-left p-4 rounded-2xl bg-slate-800/90 hover:bg-slate-800 active:scale-[0.97] transition border border-cyan-500/30 shadow-lg relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-cyan-500/10 rounded-full blur-xl"></div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 font-bold text-[11px] border border-cyan-500/30">
+                            🪶 ТЕМА 3
+                        </span>
+                        <span class="text-xs text-slate-400 font-medium">10 вопросов</span>
+                    </div>
+                    <h3 class="font-extrabold text-white text-base group-hover:text-cyan-400 transition">«Сказание о Гайавате»</h3>
+                    <p class="text-xs text-slate-400 mt-1 line-clamp-2">Г. Лонгфелло в переводе И. А. Бунина (метрика, миф, поэтика)</p>
+                </button>
+
+                <!-- Full Quiz Mode Card -->
+                <button onclick="startQuiz('all')" class="w-full p-4 rounded-2xl bg-gradient-to-r from-amber-500 via-indigo-600 to-violet-600 active:scale-[0.97] transition text-white font-extrabold shadow-xl border border-amber-300/30 flex items-center justify-between">
+                    <div class="text-left">
+                        <div class="text-xs uppercase tracking-wider text-amber-200">Полный открытый урок</div>
+                        <div class="text-base">🚀 Все 30 вопросов за раз</div>
+                    </div>
+                    <span class="text-2xl">➔</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= SCREEN 2: QUIZ INTERFACE ================= -->
+        <section id="screen-quiz" class="w-full space-y-3 hidden py-1">
+            
+            <!-- Progress Header -->
+            <div class="space-y-1.5">
+                <div class="flex justify-between items-center text-xs text-slate-300 font-bold">
+                    <span id="quiz-topic-title" class="text-amber-400 truncate max-w-[210px]">Тема</span>
+                    <span id="quiz-counter" class="bg-slate-800 px-2.5 py-1 rounded-md border border-slate-700 text-slate-300">1 / 10</span>
+                </div>
+                <div class="w-full bg-slate-800/80 h-2.5 rounded-full overflow-hidden border border-slate-700 p-0.5">
+                    <div id="quiz-progress" class="bg-gradient-to-r from-amber-400 to-indigo-500 h-full w-0 rounded-full transition-all duration-300"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-slate-800/95 border border-slate-700 rounded-2xl p-4 shadow-2xl space-y-3">
+                <h3 id="question-text" class="text-sm sm:text-base font-bold text-white leading-relaxed">
+                    Текст вопроса...
+                </h3>
+
+                <!-- Touch Options Container -->
+                <div id="options-container" class="space-y-2">
+                    <!-- Option buttons generated dynamically -->
+                </div>
+
+                <!-- Explanation Banner -->
+                <div id="explanation-box" class="hidden p-3 rounded-xl text-xs space-y-1 transition-all border">
+                    <div id="explanation-status" class="font-extrabold text-sm"></div>
+                    <p id="explanation-text" class="text-slate-200 leading-snug"></p>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <button id="next-btn" onclick="nextQuestion()" class="hidden w-full py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 active:scale-[0.98] transition rounded-xl font-black text-white text-sm shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2">
+                <span>Следующий вопрос</span>
+                <span>➔</span>
+            </button>
+        </section>
+
+        <!-- ================= SCREEN 3: RESULTS ================= -->
+        <section id="screen-results" class="w-full text-center space-y-4 hidden py-2">
+            <div class="bg-slate-800/95 border border-slate-700 rounded-3xl p-5 shadow-2xl space-y-4">
+                
+                <div class="inline-flex p-3 bg-amber-500/10 rounded-2xl border border-amber-500/20 text-4xl" id="result-icon">
+                    🏆
+                </div>
+
+                <div class="space-y-0.5">
+                    <h2 class="text-xl font-black text-white">Результат тестирования</h2>
+                    <p id="result-subtitle" class="text-xs text-slate-400">Сложный уровень викторины</p>
+                </div>
+
+                <!-- Score Counter -->
+                <div class="bg-slate-900/80 p-3 rounded-2xl border border-slate-700/60">
+                    <div class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-indigo-400 to-violet-400" id="result-score">
+                        0 / 10
+                    </div>
+                    <div class="text-xs font-bold text-slate-300 mt-0.5" id="result-percentage">
+                        0% верных ответов
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <p id="result-message" class="text-xs p-3 rounded-xl bg-slate-900/50 border border-slate-700 text-slate-300 leading-relaxed">
+                    Сообщение с оценкой...
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="space-y-2 pt-1">
+                    <button onclick="copyResults()" class="w-full py-3 bg-slate-700 hover:bg-slate-650 active:scale-[0.97] transition rounded-xl font-bold text-xs text-amber-300 border border-amber-500/30 flex items-center justify-center space-x-2">
+                        <span>📋 Скопировать результат для учителя</span>
+                    </button>
+                    <button onclick="restartCurrentQuiz()" class="w-full py-3 bg-indigo-600 active:scale-[0.97] transition rounded-xl font-bold text-xs text-white shadow-lg">
+                        🔄 Пройти снова
+                    </button>
+                    <button onclick="showTopics()" class="w-full py-2.5 bg-slate-800 active:scale-[0.97] transition rounded-xl font-medium text-xs text-slate-300 border border-slate-700">
+                        🏠 Выбрать другую тему
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-12 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-950 px-4 py-2 rounded-xl text-xs font-black shadow-2xl transition-all duration-300 opacity-0 pointer-events-none z-50">
+        Результат скопирован!
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-2.5 text-center text-[10px] text-slate-500 border-t border-slate-800/80 bg-slate-950">
+        Урок по русской и зарубежной литературе • Браузерное приложение
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Web Audio API Sound Effects Synthesizer
+        let soundEnabled = true;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('sound-btn').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    gain.gain.setValueAtTime(0.05, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.setValueAtTime(180, now + 0.1);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                }
+            } catch (e) {
+                console.log("Audio not supported or restricted");
+            }
+        }
+
+        const quizData = {
+            topic1: {
+                title: "«Ковёр жизни» (из сборника «Зелёная пиала»)",
+                questions: [
+                    {
+                        q: "1. Какова композиционная роль «обрамляющего сюжета» (чайхана в снежную бурю) в сборнике «Зелёная пиала»?",
+                        options: [
+                            "Задаёт фольклорно-притчевый подтекст и воссоздаёт атмосферу передачи народной мудрости",
+                            "Служит исключительно для развлечения случайных застрявших путешественников",
+                            "Подчёркивает историческую точность биографии туркменских мастеров",
+                            "Связывает сказку с научными географическими исследованиями Каракумов"
+                        ],
+                        correct: 0,
+                        rationale: "Обрамляющий сюжет с чаем и теплом чайханы символизирует хранилище народной памяти, где из уст в уста передаются древние поучительные сказания."
+                    },
+                    {
+                        q: "2. Какова ключевая символическая функция «зелёной пиалы» в сборнике сказок?",
+                        options: [
+                            "Это материальная ценность, из-за которой спорят герои",
+                            "Это «чаша откровения»: принявший её обязался поведать слушателям мудрую историю",
+                            "Это волшебный артефакт, исполняющий любые материальные желания",
+                            "Это знак высшей ханской власти и чинопочитания"
+                        ],
+                        correct: 1,
+                        rationale: "Пиала выступает эстафетой сказительства — кто пьёт из неё, тот берёт на себя долг поделиться духовной мудростью."
+                    },
+                    {
+                        q: "3. Какая художественная деталь выдает редкий природный дар юного Мемеда в резьбе по дереву?",
+                        options: [
+                            "Умение быстро считать заработанные монеты",
+                            "Вырезанная им фигурка верблюжонка, передающая пластику и душу живого существа",
+                            "Точно срисованный со стены узор старого мастера",
+                            "Способность работать резцом без отдыха всю ночь"
+                        ],
+                        correct: 1,
+                        rationale: "Фигурка верблюжонка поразила Чепера тем, что в ней была видна не просто форма, а искренняя любовь к жизни и пластика."
+                    },
+                    {
+                        q: "4. Каким эстетическим и этическим принципом руководствовался Чепер, отказавшись подчиниться Кызыл-хану?",
+                        options: [
+                            "Истинное народное искусство свободно и не служит тирании и лжи",
+                            "Мастер требовал слишком высокую плату золотом",
+                            "Резчик не умел работать с драгоценными металлами хана",
+                            "Чепер боялся переезжать в ханский дворец"
+                        ],
+                        correct: 0,
+                        rationale: "Мастер хранил достоинство художника: истинный талант принадлежит народу и не должен лебезить перед жестоким деспотом."
+                    },
+                    {
+                        q: "5. В чём заключается метафорический смысл понятия «Ковёр жизни»?",
+                        options: [
+                            "Описание самого дорогого ковра в ханской сокровищнице",
+                            "Переплетение жизненных испытаний, ремесленного труда и духовной преемственности",
+                            "Карта древних караванных путей через пустыню",
+                            "Символ кратковременности и хрупкости человеческого бытия"
+                        ],
+                        correct: 1,
+                        rationale: "Жизнь мастера подобна ковру: в ней переплетаются нити испытаний, верности традициям и переданного ученику мастерства."
+                    },
+                    {
+                        q: "6. Какой педагогический смысл заложен в поговорке Чепера: «На спину годовалого коня не кладут тяжёлую ношу»?",
+                        options: [
+                            "Потребность в постепенном вызревании таланта и духовной дисциплине перед освоением тайн ремесла",
+                            "Запрет привлекать детей к любому труду",
+                            "Указание на то, что молодые мастера не способны к творчеству",
+                            "Совет экономить древесину при обучении"
+                        ],
+                        correct: 0,
+                        rationale: "Мудрый учитель понимает, что мастерству нельзя обучить спешкой; нагрузки должны соответствовать духовному возрасту ученика."
+                    },
+                    {
+                        q: "7. Какое внутреннее состояние Кызыл-хана противопоставлено нравственной стойкости Чепера?",
+                        options: [
+                            "Скрытый страх тирана перед свободой духа художника и народной любовью",
+                            "Глубокая печаль из-за неразделенной любви",
+                            "Искреннее раскаяние за совершенные жестокости",
+                            "Полное равнодушие к делам своего государства"
+                        ],
+                        correct: 0,
+                        rationale: "Тиран деспотичен из-за страха: он бессилен перед духовным превосходством и некупируемым достоинством мастера."
+                    },
+                    {
+                        q: "8. Каков смысловой подтекст поступка Мемеда, бросившегося к коню жестокого хана?",
+                        options: [
+                            "Победа верности и любви к учителю над парализующим страхом перед властью",
+                            "Желание продемонстрировать горожанам свою смелость",
+                            "Хитрость с целью отвлечь внимание ханской охраны",
+                            "Случайная ошибка неопытного юноши"
+                        ],
+                        correct: 0,
+                        rationale: "Рискуя жизнью ради мастера, Мемед доказал, что стал не просто подмастерьем, а зрелым человеком с высокой душой."
+                    },
+                    {
+                        q: "9. Какое значение имеет стилизация языка в переводе А. Александровой и М. Туберовского?",
+                        options: [
+                            "Воссоздание напевности, афористичности и национального колорита восточного эпоса",
+                            "Стремление упростить текст для детского чтения",
+                            "Использование современной научной терминологии",
+                            "Полный отказ от традиционных изобразительных средств"
+                        ],
+                        correct: 0,
+                        rationale: "Переводчики бережно сохранили ритм, восточную поэтичность и мудрую афористичность ориентального сказа."
+                    },
+                    {
+                        q: "10. Каков главный идейный вывод истории о Чепере и Мемеде?",
+                        options: [
+                            "Искусство и верность побеждают деспотизм через передачу дара от мастера к ученику",
+                            "Хан уничтожил все ремёсла в стране",
+                            "Ученик запрятал всё золото мастера",
+                            "Мастер и ученик отказались от ремесла"
+                        ],
+                        correct: 0,
+                        rationale: "Главная мысль — бессмертие подлинного искусства и верности, которые сильнее любых ханских приказов и зинданов."
+                    }
+                ]
+            },
+            topic2: {
+                title: "«Сильнее крепкой стены» (Д. Боконбаев)",
+                questions: [
+                    {
+                        q: "1. Какой философско-аллегорический конфликт лежит в основе баллады Д. Боконбаева?",
+                        options: [
+                            "Столкновение внешней физической защиты (камень) и внутреннего монолита (дух и патриотизм)",
+                            "Борьба между различными архитектурными школами древности",
+                            "Конфликт между религиозными течениями",
+                            "Противоборство между молодым и старшим правителями"
+                        ],
+                        correct: 0,
+                        rationale: "Баллада доказывает: никакие стены и фортификации не спасут страну, если у народа нет душевной стойкости и любви к Родине."
+                    },
+                    {
+                        q: "2. Какова функция образа старика-мудреца в поэтической структуре баллады?",
+                        options: [
+                            "Он выступает катализатором испытания, проверяющим глубину жертвенности народа",
+                            "Он играет роль предателя, помогающего врагам",
+                            "Он — случайный прохожий с глупыми советами",
+                            "Он представляет интересы ханской администрации"
+                        ],
+                        correct: 0,
+                        rationale: "Мудрец провоцирует народ на высшее испытание, чтобы проявить и доказать истинную силу их духа."
+                    },
+                    {
+                        q: "3. В чём заключается кульминационный пафос сцены с участием матери юноши?",
+                        options: [
+                            "Мать преодолевает личное горе ради блага Родины, благословляя подвиг сына",
+                            "Мать отрекается от сына из-за страха перед старейшинами",
+                            "Мать проклинает народ и уходит к врагам",
+                            "Мать пытается откупить сына золотом"
+                        ],
+                        correct: 0,
+                        rationale: "Превозмогая боль, мать произносит: «Моё молоко оправдал ты, сынок», возвышая личную трагедию до национального подвига."
+                    },
+                    {
+                        q: "4. Какая смысловая трансформация происходит с понятием «стена» в финале?",
+                        options: [
+                            "Из каменной постройки она превращается в метафору живого человеческого единства",
+                            "Стена становится символом изоляции народа от внешнего мира",
+                            "Стена превращается в памятник погибшим воинам",
+                            "Понятие стены полностью обесценивается"
+                        ],
+                        correct: 0,
+                        rationale: "Финальный вывод гласит: сплочённый народ, готовый защищать родную землю, сам является непробиваемой стеной."
+                    },
+                    {
+                        q: "5. Какая эпическая традиция фольклора отразилась в произведении?",
+                        options: [
+                            "Мотив самопожертвования ради рода и святости гражданского долга",
+                            "Бытовой юмор и сатира на баев",
+                            "Любовная лирика в стиле восточных газелей",
+                            "Миф о сотворении мира из космического яйца"
+                        ],
+                        correct: 0,
+                        rationale: "Боконбаев опирается на традиции героического эпоса (в духе «Манаса»), где защита Отечества — высший нравственный закон."
+                    },
+                    {
+                        q: "6. В чём заключается ключевой психологический перелом в сознании народа во время испытания?",
+                        options: [
+                            "Переход от поиска внешнего спасения к осознанию собственной внутренней силы",
+                            "Отказ от борьбы и капитуляция перед врагом",
+                            "Потеря веры в мудрость предков",
+                            "Бунт против строителей стены"
+                        ],
+                        correct: 0,
+                        rationale: "Народ осознает, что победу приносит не глина с камнем, а готовность каждого встать на защиту родного очага."
+                    },
+                    {
+                        q: "7. Какое символическое значение имеет то, что добровольцем стал именно бедный юноша-сирота?",
+                        options: [
+                            "Патриотизм коренится в душе народа и не зависит от сословия или богатства",
+                            "Показ безысходности положения бедных слоев населения",
+                            "Указание на то, что богатые люди не способны любить Родину",
+                            "Случайный выбор персонажа для развития сюжета"
+                        ],
+                        correct: 0,
+                        rationale: "Истинный героизм не покупается и не зависит от статуса: простой юноша из народа оказывается самым богатым духом."
+                    },
+                    {
+                        q: "8. Какую роль в балладе играют антитезы (камень/плоть, смерть/бессмертие)?",
+                        options: [
+                            "Они усиливают драматизм и утверждают превосходство духа над мёртвой материей",
+                            "Они используются только для рифмы",
+                            "Они затеняют главный смысл произведения",
+                            "Они создают комический эффект"
+                        ],
+                        correct: 0,
+                        rationale: "Контраст живого человеческого сердца и холодного камня подчеркивает: живое чувство сильнее любого минерала."
+                    },
+                    {
+                        q: "9. Почему строящаяся каменная стена рушилась до момента испытания?",
+                        options: [
+                            "Аллегория: постройка без духовного фундамента и единства не имеет устойчивости",
+                            "Из-за плохого качества строительного раствора",
+                            "Из-за постоянных землетрясений в горах",
+                            "Вражеские диверсанты подкапывали фундамент"
+                        ],
+                        correct: 0,
+                        rationale: "Падение стены символизирует тщетность попыток закрыться от беды материальными средствами без внутреннего духа."
+                    },
+                    {
+                        q: "10. В чём заключается главный гражданский пафос поэта Д. Боконбаева?",
+                        options: [
+                            "Утверждение нерушимости народа, чья сила основана на любви к Родине",
+                            "Призыв к завоеванию соседних территорий",
+                            "Восхваление уединенной жизни вдали от общества",
+                            "Пропаганда смирения перед захватчиками"
+                        ],
+                        correct: 0,
+                        rationale: "Баллада Боконбаева — это гимн мужеству, сплоченности и несгибаемой воле народа перед лицом любых испытаний."
+                    }
+                ]
+            },
+            topic3: {
+                title: "«Сказание о Гайавате» (пер. И. А. Бунина)",
+                questions: [
+                    {
+                        q: "1. Какой размер использован Г. Лонгфелло и сохранён И. А. Буниным в переводе «Сказания о Гайавате»?",
+                        options: [
+                            "Четырёхстопный безрифменный хорей, воспроизводящий ритм финского эпоса «Калевала»",
+                            "Шестистопный дактиль (гекзаметр)",
+                            "Пятистопный ямб с перекрёстной рифмовкой",
+                            "Вольный стих без постоянного метра"
+                        ],
+                        correct: 0,
+                        rationale: "Лонгфелло вдохновлялся «Калевалой», а Бунин виртуозно передал этот чеканный, напевный хореический ритм на русском языке."
+                    },
+                    {
+                        q: "2. Какова ключевая идея обращения Гитчи Манито к племенам в главе «Трубка Мира»?",
+                        options: [
+                            "Отказ от междоусобиц, смывание боевых красок и осознание единого человеческого братства",
+                            "Завоевание океанских просторов и постройка флота",
+                            "Разделение территорий на неприкосновенные зоны",
+                            "Принесение постоянных жертв военным духам"
+                        ],
+                        correct: 0,
+                        rationale: "Владыка Жизни призывает: «Закурите Трубку Мира и живите как братья», осуждая бессмысленную кровавую вражду."
+                    },
+                    {
+                        q: "3. Каков символический смысл борьбы Гайаваты с духом кукурузы Мондамином?",
+                        options: [
+                            "Переход человечества от охоты к земледелию и созидательному труду",
+                            "Показ превосходства физической силы человека над природой",
+                            "Случайный поединок за обладание полями",
+                            "Иллюстрация языческого ритуала изгнания бесов"
+                        ],
+                        correct: 0,
+                        rationale: "Победа над Мондамином и взращивание маиса означают дар сытной, мирной жизни и оседлого труда для всех племен."
+                    },
+                    {
+                        q: "4. Какую мифологическую роль играет Нокомис, бабушка Гайаваты?",
+                        options: [
+                            "Хранительница древних космических преданий, связующая небесный мир и земной быт",
+                            "Злая колдунья, мешающая герою в его подвигах",
+                            "Простая правительница индейского поселения",
+                            "Олицетворение разрушительной силы засухи"
+                        ],
+                        correct: 0,
+                        rationale: "Нокомис, упавшая с Луны, передает Гайавате мудрость предков, знание природы и законов космоса."
+                    },
+                    {
+                        q: "5. В чём заключается культуртрегерская миссия Гайаваты при изобретении письменности?",
+                        options: [
+                            "Сохранение исторической памяти народа и традиций от забвения",
+                            "Создание тайного языка для военных шифров",
+                            "Установление торговли с европейскими купцами",
+                            "Желание прославить свое имя на камнях"
+                        ],
+                        correct: 0,
+                        rationale: "Гайавата создал пиктографическое письмо, чтобы знания, песни и история племен не исчезли со смертью сказителей."
+                    },
+                    {
+                        q: "6. За какие достоинства перевод «Песни о Гайавате» И. А. Бунина был удостоен Пушкинской премии РАН?",
+                        options: [
+                            "За филигранную точность, поэтическую музыкальность и воссоздание национального колорита",
+                            "За полную замену оригинального сюжета русскими сказочными мотивами",
+                            "За сокращение поэмы до небольшого сборника стихов",
+                            "За использование исключительно устаревших церковнославянизмов"
+                        ],
+                        correct: 0,
+                        rationale: "Академия наук высоко оценила бунинский перевод за невероятную художественную зрелость, точность и сохранение духа оригинала."
+                    },
+                    {
+                        q: "7. В чём состоит элегический и трагический подтекст финала поэмы (уплывание Гайаваты)?",
+                        options: [
+                            "Предчувствие угасания самобытной индейской цивилизации под напором чужой культуры",
+                            "Простое желание героя отправиться в новое путешествие",
+                            "Бегство Гайаваты от собственного народа",
+                            "Победа злых духов над Владыкой Жизни"
+                        ],
+                        correct: 0,
+                        rationale: "Уплывая на Закат в багрянце заходящего солнца, Гайавата символически прощается с золотым веком индейских народов."
+                    },
+                    {
+                        q: "8. Какова аллегорическая суть борьбы Гайаваты с чудовищами и злыми духами?",
+                        options: [
+                            "Очищение земли от болезней, лихорадок и сил разрушения ради благоденствия людей",
+                            "Месть за гибель своих родственников",
+                            "Завоевание новых охотничьих угодий",
+                            "Испытание волшебного оружия"
+                        ],
+                        correct: 0,
+                        rationale: "Сражаясь со злыми духами, Гайавата выступает как защитник и благодетель человечества, уничтожающий причины страданий."
+                    },
+                    {
+                        q: "9. Каково поэтическое значение образа Миннегаги («Смеющиеся Воды»)?",
+                        options: [
+                            "Воплощение гармонии природы, женской верности и объединения двух ранее враждовавших родов",
+                            "Символ разрушительного горного водопада",
+                            "Персонаж, привносящий раздор в семью Гайаваты",
+                            "Аллегория быстротечности молодости"
+                        ],
+                        correct: 0,
+                        rationale: "Брак Гайаваты и Миннегаги скрепил мир между ирокезами и дакотами, став идеалом любви и согласия."
+                    },
+                    {
+                        q: "10. В чём проявляется синтез романтизма и этнографизма в эпосе Лонгфелло в восприятии Бунина?",
+                        options: [
+                            "Сочетание поэтизации мифа с точностью воспроизведения реального быта и верований индейцев",
+                            "Полный отказ от выдумки в пользу документального отчёта",
+                            "Отсутствие связи между сюжетом и реальной историей Америки",
+                            "Преобладание сатирических элементов над поэтическими"
+                        ],
+                        correct: 0,
+                        rationale: "Поэма соединяет сказочную романтику индейских легенд с достоверными деталями их жизни, обрядов и подлинного фольклора."
+                    }
+                ]
+            }
+        };
+
+        // App State
+        let currentQuestions = [];
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let selectedOption = null;
+        let activeTopicKey = '';
+
+        // DOM Handles
+        const screenTopics = document.getElementById('screen-topics');
+        const screenQuiz = document.getElementById('screen-quiz');
+        const screenResults = document.getElementById('screen-results');
+        const homeBtn = document.getElementById('home-btn');
+
+        const quizTopicTitle = document.getElementById('quiz-topic-title');
+        const quizCounter = document.getElementById('quiz-counter');
+        const quizProgress = document.getElementById('quiz-progress');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationBox = document.getElementById('explanation-box');
+        const explanationStatus = document.getElementById('explanation-status');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+
+        // Navigation Functions
+        function showTopics() {
+            playSound('click');
+            screenTopics.classList.remove('hidden');
+            screenQuiz.classList.add('hidden');
+            screenResults.classList.add('hidden');
+            homeBtn.classList.add('hidden');
+        }
+
+        function startQuiz(topicKey) {
+            playSound('click');
+            activeTopicKey = topicKey;
+            score = 0;
+            currentQuestionIdx = 0;
+
+            if (topicKey === 'all') {
+                quizTopicTitle.textContent = "Все 30 вопросов";
+                currentQuestions = [
+                    ...quizData.topic1.questions,
+                    ...quizData.topic2.questions,
+                    ...quizData.topic3.questions
+                ];
+            } else {
+                quizTopicTitle.textContent = quizData[topicKey].title;
+                currentQuestions = [...quizData[topicKey].questions];
+            }
+
+            // Shuffle questions slightly
+            currentQuestions.sort(() => Math.random() - 0.5);
+
+            screenTopics.classList.add('hidden');
+            screenResults.classList.add('hidden');
+            screenQuiz.classList.remove('hidden');
+            homeBtn.classList.remove('hidden');
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            selectedOption = null;
+            nextBtn.classList.add('hidden');
+            explanationBox.classList.add('hidden');
+
+            const total = currentQuestions.length;
+            const q = currentQuestions[currentQuestionIdx];
+
+            quizCounter.textContent = `${currentQuestionIdx + 1} / ${total}`;
+            quizProgress.style.width = `${((currentQuestionIdx + 1) / total) * 100}%`;
+
+            questionText.textContent = q.q;
+            optionsContainer.innerHTML = '';
+
+            const optionLabels = ['A', 'Б', 'В', 'Г'];
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-3.5 rounded-xl border border-slate-700 bg-slate-800/90 active:scale-[0.98] transition flex items-start space-x-3 text-xs sm:text-sm text-slate-100 touch-action-none`;
+                btn.onclick = () => handleSelectOption(idx);
+
+                btn.innerHTML = `
+                    <span class="w-6 h-6 rounded-lg bg-slate-700 text-slate-200 font-black text-xs flex items-center justify-center shrink-0 border border-slate-600">
+                        ${optionLabels[idx]}
+                    </span>
+                    <span class="leading-snug pt-0.5 font-medium">${opt}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleSelectOption(optionIdx) {
+            if (selectedOption !== null) return;
+            selectedOption = optionIdx;
+
+            const q = currentQuestions[currentQuestionIdx];
+            const buttons = optionsContainer.querySelectorAll('button');
+
+            const isCorrect = (optionIdx === q.correct);
+
+            if (isCorrect) {
+                playSound('correct');
+                score++;
+            } else {
+                playSound('wrong');
+            }
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+
+                if (idx === q.correct) {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/80 text-emerald-200 flex items-start space-x-3 text-xs sm:text-sm font-semibold";
+                    btn.querySelector('span').className = "w-6 h-6 rounded-lg bg-emerald-500 text-white font-black text-xs flex items-center justify-center shrink-0 border border-emerald-400";
+                } else if (idx === optionIdx && !isCorrect) {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-950/80 text-rose-200 flex items-start space-x-3 text-xs sm:text-sm font-semibold";
+                    btn.querySelector('span').className = "w-6 h-6 rounded-lg bg-rose-500 text-white font-black text-xs flex items-center justify-center shrink-0 border border-rose-400";
+                } else {
+                    btn.classList.add('opacity-30');
+                }
+            });
+
+            // Explanation Display
+            explanationBox.classList.remove('hidden');
+            if (isCorrect) {
+                explanationBox.className = "p-3 rounded-xl text-xs space-y-1 bg-emerald-950/60 border border-emerald-500/50 text-emerald-300";
+                explanationStatus.textContent = "✓ Верно!";
+            } else {
+                explanationBox.className = "p-3 rounded-xl text-xs space-y-1 bg-rose-950/60 border border-rose-500/50 text-rose-300";
+                explanationStatus.textContent = "✗ Ошибка!";
+            }
+            explanationText.textContent = q.rationale;
+
+            nextBtn.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            playSound('click');
+            currentQuestionIdx++;
+            if (currentQuestionIdx < currentQuestions.length) {
+                renderQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            screenQuiz.classList.add('hidden');
+            screenResults.classList.remove('hidden');
+
+            const total = currentQuestions.length;
+            const percentage = Math.round((score / total) * 100);
+
+            document.getElementById('result-score').textContent = `${score} / ${total}`;
+            document.getElementById('result-percentage').textContent = `${percentage}% верных ответов`;
+
+            const iconEl = document.getElementById('result-icon');
+            const subtitleEl = document.getElementById('result-subtitle');
+            const messageEl = document.getElementById('result-message');
+
+            if (percentage >= 90) {
+                iconEl.textContent = "🎓";
+                subtitleEl.textContent = "Блестящие знание литературы!";
+                messageEl.textContent = "Превосходный результат! Вы отлично ориентируетесь в сюжетах, символике и поэтике всех произведений.";
+            } else if (percentage >= 70) {
+                iconEl.textContent = "🌟";
+                subtitleEl.textContent = "Хороший уровень подготовки!";
+                messageEl.textContent = "Вы проявили глубокие знания. Небольшое повторение нюансов поможет сдать любой тест на максимум!";
+            } else {
+                iconEl.textContent = "📖";
+                subtitleEl.textContent = "Требуется повторение материала!";
+                messageEl.textContent = "Сложный уровень требует глубокого анализа текстов. Перечитайте произведения и попробуйте ещё раз!";
+            }
+        }
+
+        function restartCurrentQuiz() {
+            startQuiz(activeTopicKey);
+        }
+
+        function copyResults() {
+            playSound('click');
+            const total = currentQuestions.length;
+            const percentage = Math.round((score / total) * 100);
+            const textToCopy = `Результат викторины по литературе:\nРаздел: ${quizTopicTitle.textContent}\nБаллы: ${score} из ${total} (${percentage}%)\nДата: ${new Date().toLocaleDateString()}`;
+
+            // ExecCommand fallback for iframe clipboard restriction
+            const el = document.createElement('textarea');
+            el.value = textToCopy;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            showToast("Результат скопирован!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
